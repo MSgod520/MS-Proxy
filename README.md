@@ -1,88 +1,88 @@
 # MS-Proxy
 
-[中文文档](README_ZH.md)
+[中文文档 (Chinese Version)](README_ZH.md)
 
-A modified and beautified version of Starfish-Proxy, designed for aesthetics and usability. It provides a clean proxy experience for playing on Hypixel servers.
+A modified, beautified version of Starfish-Proxy, designed for aesthetics and ease of use. Provides a clean proxy experience for playing on HYPIXEL servers.
 
-**Based on [Starfish-Proxy](https://github.com/Hexze/Starfish-Proxy). Huge thanks to the original developers.**
+**This project is based on [Starfish-Proxy](https://github.com/Hexze/Starfish-Proxy). A huge thanks to the original author and their team.**
 
 ## Features
 
-- **Direct Connect**: Launch and play immediately.
-- **Advanced Plugin System**: Powerful JS-based plugin API for extending functionality.
-- **Packet Interception**: Real-time viewing of latency and network packets.
-- **Network Optimization**: Built-in tools to optimize registry and TCP settings for lower ping.
-- **Secure**: Core safety checks to ensure compatibility with Hypixel and other servers.
+- **Direct Connection**: Ready to use upon startup, no login required.
+- **Advanced Plugin System**: Powerful JavaScript-based Plugin API for easy functionality extension.
+- **Packet Interception**: View latency and network packets in real-time.
+- **Network Optimization**: Built-in registry and TCP optimization tools to reduce game latency.
+- **Safe & Reliable**: Core security checks ensuring compatibility with servers like Hypixel.
 
 ## Quick Start
 
 ### For Users
 
-1. Download the latest release.
-2. Run `MS-Proxy.exe` (or `npm start` if running from source).
-3. Open Minecraft 1.8.9.
-4. Connect to server: `localhost:25565` 
-5. Enjoy!
+1.  Download the latest release.
+2.  Run `MS-Proxy.exe` (or `npm start` if running from source).
+3.  Open Minecraft 1.8.9.
+4.  Connect to the server: `localhost:25565`.
+5.  Enjoy the game!
 
 ### For Developers
 
-1. Clone the repository.
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the proxy:
-   ```bash
-   npm start
-   ```
-4. Build the executable:
-   ```bash
-   build.bat/npm run dist
-   ```
+1.  Clone the repository.
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Start the proxy:
+    ```bash
+    npm start
+    ```
+4.  Build executable:
+    ```bash
+    build.bat OR npm run dist
+    ```
 
 ## Commands
 
-All commands use the format `/module command [args]`. Use `/proxy help` to get started.
+All commands follow the format `/module command [args]`. Use `/proxy help` to view help.
 
 - `/proxy help` - Show all proxy commands
 - `/proxy server` - List available servers
-- `/proxy server <name|host:port>` - Switch server target
-- `/proxy addserver <name> <host:port>` - Save a server
-- `/proxy removeserver <name>` - Remove saved server
+- `/proxy server <name|host:port>` - Switch target server
+- `/proxy addserver <name> <host:port>` - Save server configuration
+- `/proxy removeserver <name>` - Remove a saved server
 - `/proxy plugins` - List loaded plugins
 
-## Plugins
+## Plugin System
 
-Plugins are placed in the `plugins/` directory. MS-Proxy retains the advanced plugin system from Starfish-Proxy.
+Plugins are located in the `plugins/` directory. MS-Proxy retains the powerful plugin system from Starfish-Proxy.
 
-### Helper API
+### Common APIs
 
-- `api.chat(message)`
-- `api.sendActionBar(text)`
-- `api.sendTitle(title, subtitle)`
-- `api.playSound(name, volume, pitch)`
+- `api.chat(message)` - Send chat message
+- `api.sendActionBar(text)` - Send Action Bar message
+- `api.sendTitle(title, subtitle)` - Send title
+- `api.playSound(name, volume, pitch)` - Play sound effect
 - `api.getStats()` - Get Ping/PPS/Memory stats
 
-*Note: Some account-related APIs from the original Starfish-Proxy (like Party Info dependent on specific backend logic) may function differently or be simplified.*
+*Note: Some APIs relying on specific backend logic may be simplified or behave differently.*
 
-## Credits & Acknowledgements
+## Credits
 
-This project is a modified version of **Starfish-Proxy**. We respect and appreciate the work of the original authors.
+This project is modified from **Starfish-Proxy**. We respect and appreciate the hard work of the original authors.
 
-*   **Original Creator**: [Hexze](https://github.com/Hexze)
+*   **Original Author**: [Hexze](https://github.com/Hexze)
 *   **Contributors**: J0nahG, Desiyn, nilsraccoon
 
-If you like the core technology, please check out the original [Starfish-Proxy](https://github.com/Hexze/Starfish-Proxy) project.
+If you are interested in the core technology, be sure to follow the original project [Starfish-Proxy](https://github.com/Hexze/Starfish-Proxy).
 
-## Network Safety Note
+## Network Security Note
 
-For regions with high latency to Hypixel (200ms+, e.g., China), there have been reports of bans caused by network fluctuations. To address this, MS-Proxy has adjusted its packet loss handling strategy: **If excessive packet loss is detected, the proxy will immediately stop sending packets.**
+For regions with high latency to Hypixel (200ms+) like China, there have been reports of bans due to network fluctuations. MS-Proxy has adjusted its packet loss strategy: **If excessive packet loss is detected, the proxy will drop the connection instead of sending dropped packets.**
 
-- **Pro**: Prevents sending erratic or delayed packets that could trigger anti-cheat bans.
-- **Con**: If your network quality is extremely poor, this will cause the connection to drop completely rather than just lagging. In such cases, **please do not use this proxy**, as it cannot provide a reasonable gameplay experience under severe network conditions.
+-   **Pros**: Avoids false positives by anti-cheat systems due to sending bursts of delayed packets.
+-   **Cons**: If your network environment is very poor, this will cause the connection to drop immediately rather than just lag. In this case, **please do not force the use of this proxy**, as it cannot provide a reasonable gaming experience in extremely poor network conditions.
 
 ## Disclaimer
 
-This is a personal project developed for **non-profit purposes only**, intended for learning and legitimate use.
-Modification and redistribution are permitted, provided that **the original Starfish-Proxy development team is clearly credited** in any distributed or modified versions.
-This software is provided "as is", without warranty of any kind.
+This program is a personal project, **non-profit**, intended for learning and legitimate use only.
+Secondary modification and distribution are allowed, but **explicit credit to the original Starfish-Proxy development team must be included** in distributed or modified versions.
+The software is provided "AS IS", without warranty of any kind.
