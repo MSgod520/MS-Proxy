@@ -428,13 +428,13 @@ function createChartConfig(color, bgColor, unit) {
             scales: {
                 x: {
                     display: true,
-                    grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false, tickLength: 0 },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)', drawBorder: false, tickLength: 0 },
                     ticks: { display: false }
                 },
                 y: {
                     display: true,
                     min: 0,
-                    grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false, tickLength: 0 },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)', drawBorder: false, tickLength: 0 },
                     ticks: { display: false },
                     border: { display: false }
                 }
@@ -682,8 +682,11 @@ function updateLanguage(lang) {
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) logoutBtn.title = t.logoutTitle;
 
-    document.getElementById('redeem-cancel-btn').innerText = t.btnCancel;
-    document.getElementById('redeem-confirm-btn').innerText = t.btnRedeem;
+    const redeemCancel = document.getElementById('redeem-cancel-btn');
+    if (redeemCancel) redeemCancel.innerText = t.btnCancel;
+
+    const redeemConfirm = document.getElementById('redeem-confirm-btn');
+    if (redeemConfirm) redeemConfirm.innerText = t.btnRedeem;
 
     const quickCmdBtn = document.querySelector('.nav-btn[data-target="view-quick-cmd"]');
     if (quickCmdBtn) quickCmdBtn.title = t.quickCmdTitle;
@@ -785,17 +788,20 @@ const redeemInput = document.getElementById('redeem-license-input');
 const redeemConfirmBtn = document.getElementById('redeem-confirm-btn');
 const redeemCancelBtn = document.getElementById('redeem-cancel-btn');
 
-document.getElementById('renew-btn').addEventListener('click', () => {
-    const username = document.getElementById('settings-username').innerText;
-    if (!username || username === 'Guest') {
-        alert(currentLang === 'zh' ? "无法获取当前用户名，请检查登录状态。" : "Cannot get username. Please login.");
-        return;
-    }
+const renewBtn = document.getElementById('renew-btn');
+if (renewBtn) {
+    renewBtn.addEventListener('click', () => {
+        const username = document.getElementById('settings-username').innerText;
+        if (!username || username === 'Guest') {
+            alert(currentLang === 'zh' ? "无法获取当前用户名，请检查登录状态。" : "Cannot get username. Please login.");
+            return;
+        }
 
-    redeemInput.value = '';
-    redeemModal.classList.remove('hidden');
-    setTimeout(() => redeemInput.focus(), 100);
-});
+        redeemInput.value = '';
+        redeemModal.classList.remove('hidden');
+        setTimeout(() => redeemInput.focus(), 100);
+    });
+}
 
 
 
