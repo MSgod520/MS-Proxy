@@ -1,0 +1,9 @@
+node_modules/
+.env
+auth_cache/
+build/
+.vscode/
+data/
+config/
+.claude/
+scripts/

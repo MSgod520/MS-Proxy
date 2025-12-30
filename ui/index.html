@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MS Proxy Control Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="sidebar-logo">
+                <i class="fa-solid fa-star has-glow"></i>
+            </div>
+            <div class="nav-items">
+                <button class="nav-btn active" data-target="view-dashboard" title="Dashboard">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </button>
+                <button class="nav-btn" data-target="view-quick-cmd" title="Quick Commands">
+                    <i class="fa-solid fa-bolt"></i>
+                </button>
+
+                <button class="nav-btn" data-target="view-resources" title="Resources">
+                    <i class="fa-solid fa-compass"></i>
+                </button>
+            </div>
+            <div class="sidebar-footer">
+                <button id="sidebar-settings-btn" class="nav-btn" data-target="view-settings" title="Settings">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div class="main-wrapper">
+            <header class="dashboard-header">
+                <div class="logo-area">
+                    <h1>MS <span class="accent">Proxy</span></h1>
+                </div>
+
+                <div class="status-card clickable-card" id="server-status-card" title="Click to switch server">
+                    <div class="status-icon"><i class="fa-solid fa-server"></i></div>
+                    <div class="status-info">
+                        <span class="label" data-i18n="targetLabel">Current Target</span>
+                        <span class="value" id="server-ip">Checking...</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down"
+                        style="font-size: 10px; color: rgba(255,255,255,0.3); margin-left: 8px;"></i>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-icon"><i class="fa-solid fa-users"></i></div>
+                    <div class="status-info">
+                        <span class="label" data-i18n="userLabel">User</span>
+                        <span class="value" id="player-name" data-i18n="waiting">Waiting...</span>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <button id="refresh-btn" class="lang-btn icon-only" title="Refresh Plugins">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                    <button id="lang-btn" class="lang-btn">
+                        <i class="fa-solid fa-globe"></i>
+                        <span id="current-lang-text">EN</span>
+                    </button>
+
+                </div>
+            </header>
+
+            <main class="content-area" style="position: relative;">
+
+                <div id="view-dashboard" class="view-section active">
+                    <div class="stats-container">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <span><i class="fa-solid fa-network-wired"></i> Latency (Ping)</span>
+                                <span class="live-val accent" id="val-ping">0ms</span>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="chart-ping"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <span><i class="fa-solid fa-arrow-right-arrow-left"></i> Traffic (PPS)</span>
+                                <span class="live-val success" id="val-pps">0</span>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="chart-traffic"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <span><i class="fa-solid fa-memory"></i> Memory (MB)</span>
+                                <span class="live-val warning" id="val-mem">0</span>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="chart-memory"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-actions" style="display: flex; gap: 12px; margin-bottom: 20px;">
+                        <button id="btn-console" class="modal-btn secondary"
+                            style="flex: 1; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(44, 62, 80, 0.6); border: 1px solid rgba(255,255,255,0.1); color: white;">
+                            <i class="fa-solid fa-terminal"></i>
+                            <span data-i18n="btnConsole">Toggle Console</span>
+                        </button>
+                        <button id="btn-restart" class="modal-btn primary"
+                            style="flex: 1; background: linear-gradient(135deg, #e74c3c, #c0392b); border: none; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);">
+                            <i class="fa-solid fa-rotate"></i>
+                            <span data-i18n="btnRestart">Restart Proxy</span>
+                        </button>
+                    </div>
+
+                    <h2 class="section-title">
+                        <i class="fa-solid fa-plug"></i>
+                        <span data-i18n="pluginsTitle">Active Plugins</span>
+                    </h2>
+                    <div class="plugins-grid" id="plugins-list"></div>
+                </div>
+
+                <div id="view-quick-cmd" class="view-section" style="display: none;">
+                    <h2 class="section-title" style="justify-content: space-between;">
+                        <span><i class="fa-solid fa-bolt"></i> <span data-i18n="quickCmdTitle">Quick
+                                Commands</span></span>
+                        <button id="btn-add-cmd" class="modal-btn secondary"
+                            style="font-size: 12px; padding: 4px 12px;">+ New</button>
+                    </h2>
+                    <div class="cmd-grid" id="quick-cmd-list"></div>
+                </div>
+
+                <div id="view-resources" class="view-section" style="display: none;">
+                    <h2 class="section-title">
+                        <i class="fa-solid fa-compass"></i>
+                        <span data-i18n="resourcesTitle">Guess you want to use</span>
+                    </h2>
+                    <div class="resources-grid" id="resources-list"></div>
+                </div>
+
+
+
+                <div id="view-settings" class="view-section" style="display: none;">
+                    <h2 class="section-title">
+                        <i class="fa-solid fa-gear"></i>
+                        <span data-i18n="settingsTitle">Settings Center</span>
+                    </h2>
+                    <div class="settings-grid">
+
+
+                        <div class="settings-card clock-card">
+                            <div class="card-header">
+                                <i class="fa-regular fa-clock"></i>
+                                <span data-i18n="serverTime">Beijing Time</span>
+                            </div>
+                            <div class="clock-display">
+                                <div id="clock-time">00:00:00</div>
+                                <div id="clock-date">YYYY-MM-DD</div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card quote-card">
+                            <div class="card-header">
+                                <i class="fa-solid fa-quote-left"></i>
+                                <span data-i18n="quoteTitle">Inexplicable Quotes</span>
+                            </div>
+                            <div class="quote-content" id="quote-display">
+                                "Click the button to get enlightened."
+                            </div>
+                            <button id="new-quote-btn" class="action-btn secondary">
+                                <i class="fa-solid fa-shuffle"></i> <span data-i18n="nextQuote">Next Quote</span>
+                            </button>
+                        </div>
+
+                        <div class="settings-card optimize-card">
+                            <div class="card-header">
+                                <i class="fa-solid fa-rocket"></i>
+                                <span data-i18n="optimizeTitle">Network Boost</span>
+                            </div>
+                            <div class="optimize-content" style="padding: 15px; text-align: center;">
+                                <div class="opt-desc" data-i18n="optimizeDesc"
+                                    style="font-size: 0.9em; color: rgba(255,255,255,0.7); margin-bottom: 15px;">
+                                    Optimize registry & TCP settings for lower ping.
+                                </div>
+                                <button id="run-optimizer-btn" class="action-btn primary" style="width: 100%;">
+                                    <i class="fa-brands fa-windows"></i> <span data-i18n="btnOptimize">Run Optimizer
+                                        (Admin)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="settings-card theme-card-wide">
+                            <div class="card-header">
+                                <i class="fa-solid fa-paint-brush"></i>
+                                <span data-i18n="themeTitle">Visual Theme</span>
+                            </div>
+                            <div class="theme-options-inline">
+                                <div class="theme-option" data-theme="starry">
+                                    <div class="theme-preview"
+                                        style="background: linear-gradient(135deg, #0f0c29, #302b63);"></div><span
+                                        data-i18n="themeStarry">Starry</span>
+                                </div>
+                                <div class="theme-option" data-theme="nord">
+                                    <div class="theme-preview"
+                                        style="background: linear-gradient(135deg, #2e3440, #88c0d0);"></div><span
+                                        data-i18n="themeNord">Nord</span>
+                                </div>
+                                <div class="theme-option" data-theme="cyberpunk">
+                                    <div class="theme-preview"
+                                        style="background: linear-gradient(135deg, #000, #1f0821);"></div><span
+                                        data-i18n="themeCyberpunk">Cyberpunk</span>
+                                </div>
+                                <div class="theme-option" data-theme="acrylic">
+                                    <div class="theme-preview"
+                                        style="background: linear-gradient(135deg, #f5f7fa, #c3cfe2);"></div><span
+                                        data-i18n="themeAcrylic">Acrylic</span>
+                                </div>
+                                <div class="theme-option" data-theme="frosted">
+                                    <div class="theme-preview"
+                                        style="background: linear-gradient(45deg, #636e72, #2d3436);"></div><span
+                                        data-i18n="themeFrosted">Frosted</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="full-terminal" class="terminal-overlay">
+                    <div class="terminal-header">
+                        <div class="term-title">
+                            <i class="fa-solid fa-terminal"></i> CONSOLE
+                        </div>
+                        <div class="term-search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="term-search-input" placeholder="Filter logs...">
+                        </div>
+                        <button id="term-close-btn" class="term-close" title="Close Terminal">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    <img src="terminal-bg.png" class="terminal-bg-img" alt="Terminal Background">
+
+                    <div id="terminal-logs" class="terminal-logs">
+                        <div class="terminal-line"><span class="timestamp">[System]</span><span class="text"
+                                style="color:#4caf50">Terminal Ready. Waiting for logs...</span></div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="control-bar">
+                <div class="console-preview" id="console-log" data-i18n="systemReady">System Ready.</div>
+                <button id="minimize-btn" class="control-btn"><i class="fa-solid fa-minus"></i></button>
+                <button id="close-btn" class="control-btn close"><i class="fa-solid fa-times"></i></button>
+            </footer>
+
+            <div id="server-modal" class="modal-overlay hidden">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <h3>Switch Server</h3>
+                        <i class="fa-solid fa-server accent"></i>
+                    </div>
+                    <div class="modal-body">
+                        <div class="server-list-container">
+                            <label class="input-label">Saved Servers</label>
+                            <div id="server-list" class="server-list"></div>
+                        </div>
+                        <div class="custom-input-container">
+                            <label class="input-label">Custom IP Address</label>
+                            <input type="text" id="custom-ip-input" placeholder="e.g., mc.hypixel.net:25565" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modal-cancel-btn" class="modal-btn secondary">Return</button>
+                        <button id="modal-save-btn" class="modal-btn primary">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="plugin-config-modal" class="modal-overlay hidden">
+                <div class="modal-box config-box">
+                    <div class="modal-header">
+                        <h3 id="config-modal-title">Plugin Configuration</h3>
+                        <i class="fa-solid fa-sliders accent"></i>
+                    </div>
+                    <div class="modal-body config-body" id="config-form-container"></div>
+                    <div class="modal-footer">
+                        <button id="config-cancel-btn" class="modal-btn secondary">Cancel</button>
+                        <button id="config-save-btn" class="modal-btn primary">Save Config</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="cmd-modal" class="modal-overlay hidden">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <h3>Add Quick Command</h3>
+                        <i class="fa-solid fa-bolt accent"></i>
+                    </div>
+                    <div class="modal-body">
+                        <div class="custom-input-container">
+                            <label class="input-label">Plugin Name (Category)</label>
+                            <input type="text" id="cmd-plugin-input" placeholder="e.g., KillAura" />
+                            <label class="input-label">Description</label>
+                            <input type="text" id="cmd-desc-input" placeholder="e.g., Toggle Aura" />
+                            <label class="input-label">Command Body</label>
+                            <input type="text" id="cmd-body-input" placeholder="e.g., .ka or /gamemode 1" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cmd-cancel-btn" class="modal-btn secondary">Cancel</button>
+                        <button id="cmd-save-btn" class="modal-btn primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://bs-community.github.io/skinview3d/js/skinview3d.bundle.js"></script>
+    <script src="renderer.js"></script>
+</body>
+
+</html>
