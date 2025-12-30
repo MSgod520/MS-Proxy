@@ -74,6 +74,13 @@ This project is a modified version of **Starfish-Proxy**. We respect and appreci
 
 If you like the core technology, please check out the original [Starfish-Proxy](https://github.com/Hexze/Starfish-Proxy) project.
 
+## Network Safety Note
+
+For regions with high latency to Hypixel (200ms+, e.g., China), there have been reports of bans caused by network fluctuations. To address this, MS-Proxy has adjusted its packet loss handling strategy: **If excessive packet loss is detected, the proxy will immediately stop sending packets.**
+
+- **Pro**: Prevents sending erratic or delayed packets that could trigger anti-cheat bans.
+- **Con**: If your network quality is extremely poor, this will cause the connection to drop completely rather than just lagging. In such cases, **please do not use this proxy**, as it cannot provide a reasonable gameplay experience under severe network conditions.
+
 ## Disclaimer
 
 This software is provided "as is", without warranty of any kind. It is intended for educational and legitimate use only.
