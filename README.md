@@ -37,7 +37,7 @@ A modified and beautified version of Starfish-Proxy, designed for aesthetics and
    ```
 4. Build the executable:
    ```bash
-   build.bat or npm run dist
+   build.bat/npm run dist
    ```
 
 ## Commands
