@@ -37,7 +37,7 @@ A modified and beautified version of Starfish-Proxy, designed for aesthetics and
    ```
 4. Build the executable:
    ```bash
-   build.bat
+   build.bat or npm run dist
    ```
 
 ## Commands
@@ -83,4 +83,6 @@ For regions with high latency to Hypixel (200ms+, e.g., China), there have been 
 
 ## Disclaimer
 
-This software is provided "as is", without warranty of any kind. It is intended for educational and legitimate use only.
+This is a personal project developed for **non-profit purposes only**, intended for learning and legitimate use.
+Modification and redistribution are permitted, provided that **the original Starfish-Proxy development team is clearly credited** in any distributed or modified versions.
+This software is provided "as is", without warranty of any kind.
