@@ -21,7 +21,7 @@ A modified and beautified version of Starfish-Proxy, designed for aesthetics and
 1. Download the latest release.
 2. Run `MS-Proxy.exe` (or `npm start` if running from source).
 3. Open Minecraft 1.8.9.
-4. Connect to server: `localhost:25565` (or check the IP in the dashboard).
+4. Connect to server: `localhost:25565` 
 5. Enjoy!
 
 ### For Developers
