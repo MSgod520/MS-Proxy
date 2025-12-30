@@ -86,3 +86,5 @@ For regions with high latency to Hypixel (200ms+) like China, there have been re
 This program is a personal project, **non-profit**, intended for learning and legitimate use only.
 Secondary modification and distribution are allowed, but **explicit credit to the original Starfish-Proxy development team must be included** in distributed or modified versions.
 The software is provided "AS IS", without warranty of any kind.
+
+联系我 Discord：http://discordapp.com/users/msgod520
