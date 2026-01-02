@@ -70,7 +70,7 @@ Starfish-Proxy 的修改美化版本，专为美观和使用而设计。为游�
 本项目修改自 **Starfish-Proxy**。我们尊重并感谢原作者的辛勤付出。
 
 *   **原作者**: [Hexze](https://github.com/Hexze)
-*   **贡献者**: J0nahG, Desiyn, nilsraccoon
+*   **贡献者**: 只有我
 
 如果您对核心技术感兴趣，请务必关注原项目 [Starfish-Proxy](https://github.com/Hexze/Starfish-Proxy)。
 
