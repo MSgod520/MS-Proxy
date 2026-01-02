@@ -70,7 +70,7 @@ Plugins are located in the `plugins/` directory. MS-Proxy retains the powerful p
 This project is modified from **Starfish-Proxy**. We respect and appreciate the hard work of the original authors.
 
 *   **Original Author**: [Hexze](https://github.com/Hexze)
-*   **Contributors**: J0nahG, Desiyn, nilsraccoon
+*   **Contributors**: Only me
 
 If you are interested in the core technology, be sure to follow the original project [Starfish-Proxy](https://github.com/Hexze/Starfish-Proxy).
 
