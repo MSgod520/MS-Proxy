@@ -40,6 +40,11 @@ A modified, beautified version of Starfish-Proxy, designed for aesthetics and ea
     build.bat OR npm run dist
     ```
 
+> [!NOTE]
+> There are no rats in this code; all obfuscated content is for personal interest and can be directly deleted.
+>
+> ![Big Rat](https://bigrat.monster/media/bigrat.jpg)
+
 ## Commands
 
 All commands follow the format `/module command [args]`. Use `/proxy help` to view help.
