@@ -50,6 +50,7 @@
     "node-machine-id": "^1.1.12",
     "prismarine-auth": "^2.7.0",
     "socket.io": "^4.8.1",
+    "socks": "^2.8.7",
     "ws": "^8.18.3"
   },
   "devDependencies": {
