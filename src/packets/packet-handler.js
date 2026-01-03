@@ -176,6 +176,7 @@ class PacketHandler {
 
     async handleInterceptors(session, direction, data, meta, canModify) {
         const event = {
+            session: session,
             data: { ...data },
             meta: { ...meta },
             cancelled: false,

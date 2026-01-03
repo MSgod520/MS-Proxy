@@ -3,6 +3,7 @@ const EntityHandler = require('./handlers/entity');
 const MovementHandler = require('./handlers/movement');
 const InventoryHandler = require('./handlers/inventory');
 const MiscHandler = require('./handlers/misc');
+const WorldHandler = require('./handlers/world');
 
 function stripColorCodes(str) {
     if (typeof str !== 'string') return str;
@@ -18,12 +19,13 @@ class GameState {
         this.movementHandler = new MovementHandler(this);
         this.inventoryHandler = new InventoryHandler(this);
         this.miscHandler = new MiscHandler(this);
+        this.worldHandler = new WorldHandler(this);
     }
 
     byteToYaw(byte) {
         return (byte / 256) * 360;
     }
-    
+
     byteToPitch(byte) {
         const signed = byte > 127 ? byte - 256 : byte;
         return signed * (90 / 128);
@@ -40,7 +42,7 @@ class GameState {
         this.position = { x: 0, y: 0, z: 0, yaw: 0, pitch: 0 };
         this.lastPosition = { x: 0, y: 0, z: 0, yaw: 0, pitch: 0 };
         this.health = 20;
-        this.inventory = { slots: new Array(45).fill({"blockId":-1}), cursorItem: {"blockId":-1}, heldItemSlot: 0 };
+        this.inventory = { slots: new Array(45).fill({ "blockId": -1 }), cursorItem: { "blockId": -1 }, heldItemSlot: 0 };
     }
 
     updateFromPacket(meta, data, fromServer) {
@@ -48,7 +50,7 @@ class GameState {
             this._handleClientPacket(meta, data);
             return;
         }
-        
+
         this._handleServerPacket(meta, data);
     }
 
@@ -72,7 +74,7 @@ class GameState {
 
     _handleServerPacket(meta, data) {
         switch (meta.name) {
-            
+
 
             case 'login':
                 this.playerHandler.handleLogin(data);
@@ -161,6 +163,21 @@ class GameState {
             case 'scoreboard_score':
                 this.miscHandler.handleScore(data);
                 break;
+
+
+            // World Logic
+            case 'map_chunk':
+                this.worldHandler.handleMapChunk(data);
+                break;
+            case 'map_chunk_bulk':
+                this.worldHandler.handleMapChunkBulk(data);
+                break;
+            case 'block_change':
+                this.worldHandler.handleBlockChange(data);
+                break;
+            case 'multi_block_change':
+                this.worldHandler.handleMultiBlockChange(data);
+                break;
         }
     }
 
@@ -207,7 +224,7 @@ class GameState {
     extractText(component) {
         if (typeof component === 'string') return component;
         if (!component) return '';
-        
+
         let text = component.text || '';
         if (component.extra && Array.isArray(component.extra)) {
             for (const extra of component.extra) {
@@ -220,7 +237,7 @@ class GameState {
     getPlayerByEntityId(entityId) {
         const uuid = this.entityIdToUuid.get(entityId);
         if (!uuid) return null;
-        
+
         const info = this.playerInfo.get(uuid);
         if (!info) return null;
 

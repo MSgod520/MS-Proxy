@@ -1,7 +1,7 @@
 module.exports = {
     client: {
         block_place: {
-            safe: false,
+            safe: true,
             eventMapping: {
                 name: 'client_block_place',
                 extractor: (data, session) => ({
